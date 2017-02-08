@@ -37,18 +37,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
    .antMatchers("/").access("hasRole('ROLE_ADMIN')")
    .antMatchers("/css/**","/js/**").permitAll()
    .antMatchers("/login").permitAll()
-   .anyRequest().authenticated()	
+   .anyRequest().authenticated()
    .and()
     .formLogin()
     .loginPage("/login")
     .usernameParameter("username")
     .passwordParameter("password")
+    .successForwardUrl("/loginProcess")
     .and()
     .logout().logoutSuccessUrl("/login?logout") 
    .and()
-   .exceptionHandling().accessDeniedPage("/error")
+   .exceptionHandling().accessDeniedPage("/exception")
   .and()
-    .csrf().disable();
+    .csrf();
  }
  
  @Bean(name="passwordEncoder")
