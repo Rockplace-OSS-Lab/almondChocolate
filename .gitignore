@@ -2,6 +2,9 @@
 /build/
 !gradle/wrapper/gradle-wrapper.jar
 
+### iOS ###
+.DS_Store
+
 ### STS ###
 .apt_generated
 .classpath
@@ -9,6 +12,7 @@
 .project
 .settings
 .springBeans
+bin/
 
 ### IntelliJ IDEA ###
 .idea
