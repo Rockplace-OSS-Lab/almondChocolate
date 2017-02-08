@@ -8,8 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 public class Project {
@@ -28,7 +26,6 @@ public class Project {
 	
 	private int status;
 	
-	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime regDate = LocalDateTime.now();
 	
 	private String okKey;

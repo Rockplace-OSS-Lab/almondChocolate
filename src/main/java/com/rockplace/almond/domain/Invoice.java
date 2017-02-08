@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 public class Invoice {
@@ -53,7 +51,6 @@ public class Invoice {
 	
 	private String invoiceFileName;
 	
-	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime updateDate;
 
 	public void setInvoiceSeq(long invoiceSeq) {

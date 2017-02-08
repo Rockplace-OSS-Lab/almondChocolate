@@ -6,8 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 public class BillingAccount {
@@ -22,7 +20,6 @@ public class BillingAccount {
 	@Column(nullable = false)
 	private String adminEmail;
 	
-	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime regDate = LocalDateTime.now();
 
 	public void setBillingAccountSeq(long billingAccountSeq) {

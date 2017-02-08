@@ -7,8 +7,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 public class ScheluderLog {
@@ -24,7 +22,6 @@ public class ScheluderLog {
 	@Enumerated(EnumType.ORDINAL)
 	private ResultCode resultCode;
 	
-	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime updateDate = LocalDateTime.now();
 
 	public void setLogSeq(long logSeq) {
