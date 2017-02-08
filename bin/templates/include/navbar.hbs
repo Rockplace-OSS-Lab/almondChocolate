@@ -1,0 +1,31 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/">아몬드초콜릿 개발버전</a>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-right">
+
+
+				{{#loginCheck}}
+				<li><a href="/dashboard">대쉬보드</a></li>
+				
+				<li><a href="/management/account">고객사 관리</a></li>
+				<li><a href="/management/billing_account">빌링 계정 관리</a></li>
+				
+				<li><a href="/project_registration">프로젝트 관리</a></li>
+				<li><a href="" id="logout">로그아웃</a></li>
+				<form name="logoutForm" action="/logout" method="POST">
+					<input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
+				</form>
+				{{/loginCheck}}
+				{{^loginCheck}}
+				<li><a href="/login" id="login">로그인</a></li>
+				{{/loginCheck}}
+			</ul>
+		</div>
+	</div>
+</nav>

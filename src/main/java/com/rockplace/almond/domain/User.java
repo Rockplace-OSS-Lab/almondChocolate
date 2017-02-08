@@ -1,6 +1,7 @@
 package com.rockplace.almond.domain;
 
 import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -10,46 +11,59 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 @Entity
 public class User {
 
 	@Id
 	@GeneratedValue
 	private long userSeq;
-	
+
 	@Column(nullable = false, unique = true)
 	private String email;
-	
+
 	@Column(nullable = false)
 	private String password;
-	
+
 	private String company;
-	
-	@OneToMany(mappedBy="user", fetch=FetchType.EAGER)
+
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private List<UserRole> userRoles;
-	
+
 	private int status;
-	
+
 	private LocalDateTime lastLogin;
-	
+
 	private LocalDateTime regDate = LocalDateTime.now();
-	
+
 	private String okKey;
-	
+
 	public User() {
 		super();
 	}
-	
+
 	public User(User user) {
-		this.userSeq=user.userSeq;
-		this.email=user.email;
-		this.company=user.company;
-		this.lastLogin=user.lastLogin;
-		this.userRoles=user.userRoles;
-		this.okKey=user.okKey;
-		this.password=user.password;
-		this.regDate=user.regDate;
-		this.status=user.status;
+		this.userSeq = user.userSeq;
+		this.email = user.email;
+		this.company = user.company;
+		this.lastLogin = user.lastLogin;
+		this.userRoles = user.userRoles;
+		this.okKey = user.okKey;
+		this.password = user.password;
+		this.regDate = user.regDate;
+		this.status = user.status;
+	}
+
+	public String okKey() {
+		Calendar cal = Calendar.getInstance();
+		this.okKey = String.valueOf(cal.getTimeInMillis() / 1000) + "" + RandomStringUtils.randomAlphanumeric(10);
+
+		return okKey;
+	}
+
+	public void update() {
+		this.status = 1;
 	}
 
 	public long getUserSeq() {
@@ -127,8 +141,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [userSeq=" + userSeq + ", email=" + email + ", password=" + password + ", company=" + company
-				+ ", status=" + status + ", lastLogin=" + lastLogin + ", regDate="
-				+ regDate + ", okKey=" + okKey + "]";
+				+ ", status=" + status + ", lastLogin=" + lastLogin + ", regDate=" + regDate + ", okKey=" + okKey + "]";
 	}
 
 }

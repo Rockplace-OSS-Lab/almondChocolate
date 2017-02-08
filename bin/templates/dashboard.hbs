@@ -1,0 +1,91 @@
+{{#partial "content" }}
+<div class="container-fluid">
+	<div class="row">
+		<div class="main">
+		{{#if projectList}}
+			<!-- 프로젝트 별로 대시보드 탭 구분 -->
+			<ul class="nav nav-tabs">
+				<li role="presentation" class="active"><a href="#">통합</a></li>
+				{{#each projectList}}
+				<li role="presentation"><a href="/dashboard?projectId={{projectId}}">{{projectId}}</a></li>
+				{{/each}}
+			</ul>
+
+			<div class="row placeholders" id="dashboardChartArea">
+				<div class="panel panel-default col-md-6 col-xs-12">
+					<div class="panel-heading">월별 사용 요금 (최근 3개월)</div>
+					<div class="panel-body">
+						<div id="barChart"></div>
+					</div>
+				</div>
+				
+				<div class="panel panel-default col-md-6 col-xs-12">
+					<div class="panel-heading">리소스별 사용 요금 (당월)</div>
+					<div class="panel-body">
+					<div id="donutChart"></div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 검색 폼 -->
+			<form class="form-inline" id="dashboardSearchForm">
+				{{#if projectList}}
+				<input type="hidden" id="projectId" name="projectId" value="{{projectId}}">
+				{{/if}}
+				<select class="form-control" id="searchType" name="searchType">
+					<option value="measurement1">Product</option>
+					<option value="description">Resource</option>
+				</select>
+				<input type="text" class="form-control" id="searchText" placeholder="검색어를 입력하세요." name="searchText">
+				<div class="form-group">
+					<label for="startDate">From</label> <input type="text" class="searchDate form-control" id="startDate" name="startDate" placeholder="Start date">
+				</div>
+				<div class="form-group">
+					<label for="endDate">To</label> <input type="text" class="searchDate form-control" id="endDate" name="endDate" placeholder="End date">
+				</div>
+				<button type="button" class="btn btn-default" id="dashboardSearchBtn">검색</button>
+			</form>
+
+			<div class="table-responsive">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Time</th>
+							<th>Product</th>
+							<th>Resource</th>
+							<th>Usage</th>
+							<th>Amount</th>
+						</tr>
+					</thead>
+					<tbody id="invoiceRows">
+						{{#each invoiceDetail}}
+						<tr>
+							<td>{{startTime}} ~ {{endTime}}</td>
+							<td>{{measurement1}}</td>
+							<td>{{description}}</td>
+							<td>
+								{{measurement1TotalConsumption}}
+								{{measurement1Units}}
+							</td>
+							<td>
+								{{cost}}
+								{{currency}}
+							</td>
+						</tr>
+						{{else}}
+						<tr>
+							<td colspan="5">인보이스 정보가 없습니다.</td>
+						</tr>
+						{{/each}}
+					</tbody>
+				</table>
+			</div>
+		{{else}}
+		  사용 가능한 프로젝트가 없습니다.
+		{{/if}}
+		</div>
+	</div>
+</div>
+{{/partial}}
+
+{{> include/base}}

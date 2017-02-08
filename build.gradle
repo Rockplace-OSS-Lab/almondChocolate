@@ -37,4 +37,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-security')
 	runtime('mysql:mysql-connector-java')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile('com.google.code.gson:gson:2.8.0')
+	compile('com.sun.mail:javax.mail:1.5.6')
+	compile('org.springframework:spring-context-support:4.3.3.RELEASE')
 }
