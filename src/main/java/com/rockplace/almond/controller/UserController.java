@@ -13,10 +13,6 @@ public class UserController {
 
 	@GetMapping("/login")
 	public String login(HttpServletRequest request) {
-		String error = request.getParameter("error");
-		if(error != null)
-			return "loginFail";
-		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		return "login";
 	}
@@ -26,7 +22,16 @@ public class UserController {
 		return "error";
 	}
 	@PostMapping("/loginProcess")
-	public String loginProcess(){
+	public String loginProcess(HttpServletRequest request){
+		request.setAttribute("loginCheck", "true");
 		return "loginProcess";
+	}
+	@GetMapping("/logout")
+	public String logout(){
+		return "login";
+	}
+	@GetMapping("/loginFail")
+	public String loginFail(){
+		return "loginFail";
 	}
 }

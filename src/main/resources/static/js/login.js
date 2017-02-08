@@ -75,15 +75,7 @@ $("#logout").click(function(event) {
 	event.preventDefault();
 	
 	if(confirm("로그아웃 하시겠습니까?")) {
-		$.post(getContextPath() + "/logout", function(data) {
-			alert(data.msg);
-			
-			if (data.result == "ok") {
-				$(location).attr("href", getContextPath() + "/");
-			}
-		})
-		.fail(function() {
-			alert("서버에 연결할 수 없습니다.");
-		});
+		var fr = document.logoutForm;
+		fr.submit();
 	}
 });
