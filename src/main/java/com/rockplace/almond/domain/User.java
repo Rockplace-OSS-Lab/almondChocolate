@@ -55,14 +55,14 @@ public class User {
 		this.status = user.status;
 	}
 
-	public String okKey() {
+	public String createKey() {
 		Calendar cal = Calendar.getInstance();
 		this.okKey = String.valueOf(cal.getTimeInMillis() / 1000) + "" + RandomStringUtils.randomAlphanumeric(10);
 
 		return okKey;
 	}
 
-	public void update() {
+	public void updateStatus() {
 		this.status = 1;
 	}
 
