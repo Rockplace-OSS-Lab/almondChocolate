@@ -54,7 +54,7 @@ var registrationFormValidate = $("#registrationForm").validate({
 	}
 });
 
-$("#registrationForm").submit(function(event) {
+$("#registration_form").submit(function(event) {
 	event.preventDefault();
 	
 	if(registrationFormValidate.form() == true) {

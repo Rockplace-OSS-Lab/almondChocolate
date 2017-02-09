@@ -5,16 +5,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import almond.domain.User;
+import almond.domain.UserRole;
 import almond.repository.UserRepository;
+import almond.repository.UserRoleRepository;
 
 @Service
 public class UserService {
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private UserRoleRepository userRoleRepository;
 	
 	@Transactional
 	public void registrationProcess(User user) {
-		user.setOkKey(user.createKey());
+		user.generatorKey();
 		userRepository.save(user);
 	}
 
@@ -26,6 +30,8 @@ public class UserService {
 			throw new Exception("okKey 불일치!");
 		}
 		user.updateStatus();
+		UserRole userRole = new UserRole(user);
+		userRoleRepository.save(userRole);
 		userRepository.save(user);
 	}
 }

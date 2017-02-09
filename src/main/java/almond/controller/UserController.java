@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import almond.domain.EmailTemplete;
@@ -16,6 +17,7 @@ import almond.service.MailService;
 import almond.service.UserService;
 
 @Controller
+@RequestMapping("/users")
 public class UserController {
 
 	@Autowired
@@ -58,6 +60,7 @@ public class UserController {
 
 	@PostMapping("/registration")
 	public String registrationProcess(User user, EmailTemplete emailTemplete) {
+		
 		// 유저 등록
 		userService.registrationProcess(user);
 		// 승인 url 생성
@@ -65,7 +68,7 @@ public class UserController {
 		// 메일 발송
 		mailService.sendMail(user.getEmail(), "승인요청메일", contents);
 
-		return "redirect:/registration";
+		return "redirect:/users/registration";
 	}
 
 	@GetMapping("/registration_ok")

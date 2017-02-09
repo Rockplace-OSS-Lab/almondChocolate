@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 public class User {
@@ -54,13 +55,17 @@ public class User {
 		this.status = user.status;
 	}
 
-	public String createKey() {
+	private String createKey() {
 		Calendar cal = Calendar.getInstance();
 		this.okKey = String.valueOf(cal.getTimeInMillis() / 1000) + "" + RandomStringUtils.randomAlphanumeric(10);
 
 		return okKey;
 	}
-
+	
+	public void generatorKey() {
+		this.okKey = createKey();
+	}
+	
 	public void updateStatus() {
 		this.status = 1;
 	}
@@ -86,9 +91,10 @@ public class User {
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		this.password = encoder.encode(password);
 	}
-
+	
 	public String getCompany() {
 		return company;
 	}

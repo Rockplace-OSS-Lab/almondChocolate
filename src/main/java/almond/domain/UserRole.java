@@ -20,10 +20,16 @@ public class UserRole {
 	
 	private String role;
 	
-	public UserRole() {
+	public UserRole(){
 		super();
 	}
-
+	
+	public UserRole(User user) {
+		super();
+		this.user = user;
+		role = "ROLE_USER";
+	}
+	
 	public long getUserRoleId() {
 		return userRoleId;
 	}
