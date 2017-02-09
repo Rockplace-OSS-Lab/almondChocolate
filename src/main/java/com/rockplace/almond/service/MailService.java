@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 @Component
 @PropertySource("classpath:properties/mail.properties")
 public class MailService {
-
 	@Autowired
 	private JavaMailSender javaMailSender;
 

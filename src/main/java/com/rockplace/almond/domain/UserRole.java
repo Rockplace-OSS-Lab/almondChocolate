@@ -15,7 +15,7 @@ public class UserRole {
 	private long userRoleId;
 	
 	@ManyToOne
-	@JoinColumn(foreignKey=@ForeignKey(name="fk_userRole_to_user"))
+	@JoinColumn(name="user_id", foreignKey=@ForeignKey(name="fk_userRole_to_user"))
 	private User user;
 	
 	private String role;
