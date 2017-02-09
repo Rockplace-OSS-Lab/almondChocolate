@@ -15,7 +15,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 @Entity
 public class User {
-
 	@Id
 	@GeneratedValue
 	private long userSeq;
