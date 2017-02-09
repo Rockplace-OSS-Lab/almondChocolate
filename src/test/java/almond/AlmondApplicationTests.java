@@ -1,4 +1,4 @@
-package com.rockplace;
+package almond;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

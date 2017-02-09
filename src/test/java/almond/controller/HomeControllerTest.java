@@ -1,4 +1,4 @@
-package com.rockplace.almond.controller;
+package almond.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.rockplace.almond.core.test.AbstractIntegrationTest;
+import almond.core.test.AbstractIntegrationTest;
 
 public class HomeControllerTest extends AbstractIntegrationTest {
     @Test

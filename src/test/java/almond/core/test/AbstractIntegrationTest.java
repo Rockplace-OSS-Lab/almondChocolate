@@ -1,4 +1,4 @@
-package com.rockplace.almond.core.test;
+package almond.core.test;
 
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
