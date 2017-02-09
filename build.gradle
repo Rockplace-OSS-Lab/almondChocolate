@@ -40,4 +40,5 @@ dependencies {
 	compile('com.google.code.gson:gson:2.8.0')
 	compile('com.sun.mail:javax.mail:1.5.6')
 	compile('org.springframework:spring-context-support:4.3.3.RELEASE')
+	compile('com.sun.mail:javax.mail:1.5.6')
 }
