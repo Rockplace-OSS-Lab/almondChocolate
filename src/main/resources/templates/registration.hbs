@@ -40,6 +40,7 @@
 						<input type="text" name="company" class="form-control" id="company" value="">
 					</div>
 					
+					<input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}"/>
 					<button type="submit" class="btn btn-primary">등록 요청</button>
 				</form>			
 			</div>
