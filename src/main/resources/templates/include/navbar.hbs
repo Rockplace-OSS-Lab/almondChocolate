@@ -10,21 +10,24 @@
 			<ul class="nav navbar-nav navbar-right">
 
 
-				{{#loginCheck}}
+				{{#authorize "hasRole('ROLE_USER')"}}
 				<li><a href="/dashboard">대쉬보드</a></li>
-				
+				{{/authorize}}
+				{{#authorize "hasRole('ROLE_ADMIN')"}}
 				<li><a href="/management/account">고객사 관리</a></li>
 				<li><a href="/management/billing_account">빌링 계정 관리</a></li>
 				
 				<li><a href="/project_registration">프로젝트 관리</a></li>
+				{{/authorize}}
+				{{#authorize "isAuthenticated()"}}
 				<li><a href="" id="logout">로그아웃</a></li>
 				<form name="logoutForm" action="/logout" method="POST">
 					<input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
 				</form>
-				{{/loginCheck}}
-				{{^loginCheck}}
+				{{/authorize}}
+				{{#authorize "isAnonymous()"}}
 				<li><a href="/login" id="login">로그인</a></li>
-				{{/loginCheck}}
+				{{/authorize}}
 			</ul>
 		</div>
 	</div>
