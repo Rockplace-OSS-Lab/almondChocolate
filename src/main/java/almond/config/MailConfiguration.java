@@ -1,5 +1,6 @@
 package almond.config;
 
+import java.io.IOException;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -8,6 +9,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+
+import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.Template;
 
 @Configuration
 @PropertySource("classpath:properties/mail.properties")
@@ -29,6 +33,9 @@ public class MailConfiguration {
 	private String username;
 	@Value("${mail.smtp.password}")
 	private String password;
+	
+	@Value("${registration.template.file}")
+	private String registrationTemplateFile;
 
 	@Bean
 	public JavaMailSender javaMailSender() {
@@ -45,4 +52,9 @@ public class MailConfiguration {
 		return mailSender;
 	}
 
+	@Bean(name = "registrationTemplate")
+	public Template registrationTemplate() throws IOException {
+		Handlebars handlebars = new Handlebars();
+		return handlebars.compile(registrationTemplateFile);
+	}
 }

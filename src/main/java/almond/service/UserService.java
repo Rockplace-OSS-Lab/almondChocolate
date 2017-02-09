@@ -12,10 +12,14 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+	private MailService mailService;
+	
 	@Transactional
 	public void registrationProcess(User user) {
 		user.setOkKey(user.createKey());
-		userRepository.save(user);
+		User savedUser = userRepository.save(user);
+		mailService.sendRegistrationMail(savedUser);
 	}
 
 	@Transactional

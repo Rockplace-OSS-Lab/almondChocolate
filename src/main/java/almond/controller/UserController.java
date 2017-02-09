@@ -10,20 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import almond.domain.EmailTemplete;
 import almond.domain.User;
-import almond.service.MailService;
 import almond.service.UserService;
 
 @Controller
 public class UserController {
-
-	@Autowired
-	private MailService mailService;
-
 	@Autowired
 	private UserService userService;
-
+	
 	@GetMapping("/login")
 	public String login(HttpServletRequest request) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -57,13 +51,9 @@ public class UserController {
 	}
 
 	@PostMapping("/registration")
-	public String registrationProcess(User user, EmailTemplete emailTemplete) {
+	public String registrationProcess(User user) throws Exception {
 		// 유저 등록
 		userService.registrationProcess(user);
-		// 승인 url 생성
-		String contents = emailTemplete.contents(user);
-		// 메일 발송
-		mailService.sendMail(user.getEmail(), "승인요청메일", contents);
 
 		return "redirect:/registration";
 	}
