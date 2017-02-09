@@ -14,7 +14,7 @@ public class UserService {
 	
 	@Transactional
 	public void registrationProcess(User user) {
-		user.setOkKey(user.okKey());
+		user.setOkKey(user.createKey());
 		userRepository.save(user);
 	}
 
@@ -25,7 +25,7 @@ public class UserService {
 		if (!user.getOkKey().equals(okKey)) {
 			throw new Exception("okKey 불일치!");
 		}
-		user.update();
+		user.updateStatus();
 		userRepository.save(user);
 	}
 }
