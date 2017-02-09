@@ -46,6 +46,7 @@ public class MailService {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+		
 		return sendMail(user.getEmail(), "승인요청메일", contents);
 	}
 	

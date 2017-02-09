@@ -25,11 +25,10 @@ public class UserControllerTest extends AbstractIntegrationTest {
     @Test
 	public void registration() throws Exception {
     	MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-    	params.add("email", "javajigi@gmail.com");
+    	params.add("email", "javajigi@rockplace.co.kr");
     	params.add("password", "password");
-    	params.add("okKey", "key");
     	HttpEntity<MultiValueMap<String, String>> request = requestForm(params);
     	ResponseEntity<String> response = template.postForEntity( "/registration", request , String.class );
     	assertEquals(HttpStatus.FOUND, response.getStatusCode());
-	}
+    }
 }
