@@ -10,7 +10,10 @@ import java.util.TimeZone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
+
 import almond.domain.DashBoard;
+import almond.domain.DashStatistic;
 import almond.repository.DashBoardRepository;
 import almond.util.JsonHelper;
 
@@ -19,6 +22,8 @@ public class DashBoardService {
 	
 	@Autowired
 	DashBoardRepository dashBoardRepository;
+	
+	
 	
 	public List<DashBoard> getDashboard(String accountId){
 		return dashBoardRepository.findByAccountId(accountId);
@@ -31,16 +36,16 @@ public class DashBoardService {
 		params.put("tz", timeZone.getID());
 		
 		if(params.get("type").equals("bar")) {
-			return getMonthlyCost(params);
-		} else if(params.get("type").equals("donut")) {
+			return getMonthlyCost();
+		} /*else if(params.get("type").equals("donut")) {
 			return getCostPerResource(params);
-		}
+		}*/
 		
 		return "";
 	}
 	
 	// 구글 차트용 월별 사용 요금
-	private String getMonthlyCost(Map<String, Object> params) {
+	public String getMonthlyCost() {
 		
 		
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -65,22 +70,26 @@ public class DashBoardService {
 		
 		List<Map<String, Object>> rows_array = new ArrayList<Map<String,Object>>();
 		
-		List<Map<String, Object>> statistics = invoiceMapper.getInvoiceStatistic(params);
+		List<String> dashStringData = dashBoardRepository.getDashStatistic();
 		
-		for(Map<String, Object> s : statistics) {
+		System.out.println(dashStringData);
+		
+		for(int i=0;i<dashStringData.size();i++){
+			String statistics = (String)dashStringData.get(i);
+			String[] tmp =  statistics.split(",");
 			List<Map<String, Object>> c_array = new ArrayList<Map<String,Object>>();
 			Map<String, Object> c = new HashMap<String, Object>();
 			
 			Map<String, Object> month = new HashMap<String, Object>();
 			
-			month.put("v", s.get("month"));
+			month.put("v", tmp[0]);
 			month.put("f", null);
 			
 			c_array.add(month);
 			
 			Map<String, Object> total_cost = new HashMap<String, Object>();
 			
-			total_cost.put("v", s.get("total_cost"));
+			total_cost.put("v", tmp[1]);
 			total_cost.put("f", null);
 			
 			c_array.add(total_cost);
@@ -88,15 +97,15 @@ public class DashBoardService {
 			c.put("c", c_array);
 			
 			rows_array.add(c);
-		}
 		
+		}
 		result.put("rows", rows_array);
 		
 		return JsonHelper.convertMapToJson(result);
 	}
 	
 	// 구글 차트용 월별 사용 요금
-	private String getCostPerResource(Map<String, Object> params) {
+	/*private String getCostPerResource(Map<String, Object> params) {
 		Calendar cal = Calendar.getInstance();
 		TimeZone timeZone = cal.getTimeZone();
 		
@@ -157,5 +166,5 @@ public class DashBoardService {
 		result.put("rows", rows_array);
 		
 		return JsonHelper.convertMapToJson(result);
-	}
+	}*/
 }
