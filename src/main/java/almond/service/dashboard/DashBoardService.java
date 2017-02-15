@@ -10,10 +10,7 @@ import java.util.TimeZone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.gson.Gson;
-
 import almond.domain.DashBoard;
-import almond.domain.DashStatistic;
 import almond.repository.DashBoardRepository;
 import almond.util.JsonHelper;
 
@@ -69,26 +66,22 @@ public class DashBoardService {
 		
 		List<Map<String, Object>> rows_array = new ArrayList<Map<String,Object>>();
 		
-		List<DashStatistic> dashStringData = dashBoardRepository.getDashStatistic();
+		List<Object[]> dashStringData = dashBoardRepository.getDashStatistic("00C7AF-773114-6DB700");
 		
-		System.out.println(dashStringData.toString());
-		
-		for(int i=0;i<dashStringData.size();i++){
-			DashStatistic statistics = dashStringData.get(i);
-			String[] tmp =  statistics.toString().split(",");
+		for(Object[] statistic : dashStringData){
 			List<Map<String, Object>> c_array = new ArrayList<Map<String,Object>>();
 			Map<String, Object> c = new HashMap<String, Object>();
 			
 			Map<String, Object> month = new HashMap<String, Object>();
 			
-			month.put("v", tmp[0]);
+			month.put("v", statistic[0]);
 			month.put("f", null);
 			
 			c_array.add(month);
 			
 			Map<String, Object> total_cost = new HashMap<String, Object>();
 			
-			total_cost.put("v", tmp[1]);
+			total_cost.put("v", statistic[1]);
 			total_cost.put("f", null);
 			
 			c_array.add(total_cost);
