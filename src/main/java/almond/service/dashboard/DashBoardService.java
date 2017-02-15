@@ -47,7 +47,6 @@ public class DashBoardService {
 	// 구글 차트용 월별 사용 요금
 	public String getMonthlyCost() {
 		
-		
 		Map<String, Object> result = new HashMap<String, Object>();
 		
 		List<Map<String, Object>> cols_array = new ArrayList<Map<String,Object>>();
@@ -70,13 +69,13 @@ public class DashBoardService {
 		
 		List<Map<String, Object>> rows_array = new ArrayList<Map<String,Object>>();
 		
-		List<String> dashStringData = dashBoardRepository.getDashStatistic();
+		List<DashStatistic> dashStringData = dashBoardRepository.getDashStatistic();
 		
-		System.out.println(dashStringData);
+		System.out.println(dashStringData.toString());
 		
 		for(int i=0;i<dashStringData.size();i++){
-			String statistics = (String)dashStringData.get(i);
-			String[] tmp =  statistics.split(",");
+			DashStatistic statistics = dashStringData.get(i);
+			String[] tmp =  statistics.toString().split(",");
 			List<Map<String, Object>> c_array = new ArrayList<Map<String,Object>>();
 			Map<String, Object> c = new HashMap<String, Object>();
 			

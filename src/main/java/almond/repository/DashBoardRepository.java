@@ -16,5 +16,5 @@ public interface DashBoardRepository extends JpaRepository<DashBoard, Long> {
 	public List<DashBoard> findByAccountIdAndByProjectId(String accountId, String projectId);
 	*/
 	@Query(value = "SELECT date_format(m.start_time, '%Y-%m') as month, m.cost as Total_cost from dash_board m where m.account_id = '00C7AF-773114-6DB700' ", nativeQuery = true)
-	public List<String> getDashStatistic(); 
+	public List<DashStatistic> getDashStatistic(); 
 }
