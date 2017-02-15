@@ -7,7 +7,7 @@
 		</layout>
 	</appender>
 	
-	<logger name="com.rockplace.almond" level="DEBUG" />
+	<logger name="almond" level="DEBUG" />
 
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
