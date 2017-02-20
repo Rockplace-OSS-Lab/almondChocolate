@@ -38,7 +38,7 @@ public class DashBoardService {
 		if(projectId != null){
 			dashBoardList = dashBoardRepository.findByProjectId(projectId, pageRequest);
 		} else {
-			dashBoardList = dashBoardRepository.findByProjectId(getProjectList(searchDashboard),pageRequest);
+			dashBoardList = dashBoardRepository.findByProjectIdIn(getProjectList(searchDashboard),pageRequest);
 		}
 		
 		

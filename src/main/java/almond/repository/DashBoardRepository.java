@@ -1,6 +1,5 @@
 package almond.repository;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -14,8 +13,7 @@ public interface DashBoardRepository extends JpaRepository<DashBoard, Long> {
 	
 	public Page<DashBoard> findByProjectId(String projectId, Pageable pageable);
 	
-	@Query("SELECT m FROM dash_board m WHERE m.project_id IN (?1)")
-	public Page<DashBoard> findByProjectId(Collection<String> projectList, Pageable pageable);
+	public Page<DashBoard> findByProjectIdIn(List<String> projectList, Pageable pageable);
 	
 	// public List<DashBoard> findByAccountIdAndByProjectId(String accountId, String projectId);
 	
