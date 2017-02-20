@@ -13,7 +13,7 @@ public class ProjectService {
 	@Autowired
 	ProjectRepository projectRepository;
 	
-	public List<Project> getProjects(){
-		return projectRepository.findByProjectId("astute-charter-133923");
+	public List<Project> getProjects(Long userSeq){
+		return projectRepository.findByUserUserSeq(userSeq);
 	}
 }

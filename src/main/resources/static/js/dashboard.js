@@ -7,6 +7,6 @@ $('#dashboard_search_btn').click(function() {
 	});
 });
 
-$( ".search_date" ).datepicker({
+$( ".searchDate" ).datepicker({
 	dateFormat: 'yy-mm-dd'
 });

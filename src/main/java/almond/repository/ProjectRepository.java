@@ -8,4 +8,6 @@ import almond.domain.Project;
 
 public interface ProjectRepository extends JpaRepository<Project, Long>{
 	public List<Project> findByProjectId(String projectId);
+
+	public List<Project> findByUserUserSeq(Long i);
 }

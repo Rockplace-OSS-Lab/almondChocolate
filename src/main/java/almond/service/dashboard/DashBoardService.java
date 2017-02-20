@@ -8,9 +8,13 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import almond.domain.DashBoard;
+import almond.domain.Project;
+import almond.domain.SearchDashboard;
 import almond.repository.DashBoardRepository;
 import almond.util.JsonHelper;
 
@@ -20,10 +24,34 @@ public class DashBoardService {
 	@Autowired
 	DashBoardRepository dashBoardRepository;
 	
-	
-	
-	public List<DashBoard> getDashboard(String accountId){
+	/*public List<DashBoard> getDashboard(String accountId){
 		return dashBoardRepository.findByAccountId(accountId);
+	}*/
+	
+	public Page<DashBoard> getDashboard(SearchDashboard searchDashboard){
+		int startPage = searchDashboard.getStartPage();
+		int currentPage = searchDashboard.getCurrentPage();
+		String projectId = searchDashboard.getProjectId();
+		
+		PageRequest pageRequest = new PageRequest(startPage, 10);
+		Page<DashBoard> dashBoardList = null;
+		if(projectId != null){
+			dashBoardList = dashBoardRepository.findByProjectId(projectId, pageRequest);
+		} else {
+			dashBoardList = dashBoardRepository.findByProjectId(getProjectList(searchDashboard),pageRequest);
+		}
+		
+		
+		
+		return dashBoardList;
+	}
+	
+	public List<String> getProjectList(SearchDashboard searchDashboard){
+		List<String> projectList = new ArrayList<String>();
+		for(Project project : searchDashboard.getProjectList()){
+			projectList.add(project.getProjectId());
+		}
+		return projectList;
 	}
 	
 	public String getChartData(Map<String, Object> params) {
@@ -34,9 +62,9 @@ public class DashBoardService {
 		
 		if(params.get("type").equals("bar")) {
 			return getMonthlyCost();
-		} /*else if(params.get("type").equals("donut")) {
+		} else if(params.get("type").equals("donut")) {
 			return getCostPerResource(params);
-		}*/
+		}
 		
 		return "";
 	}
@@ -97,7 +125,7 @@ public class DashBoardService {
 	}
 	
 	// 구글 차트용 월별 사용 요금
-	/*private String getCostPerResource(Map<String, Object> params) {
+	private String getCostPerResource(Map<String, Object> params) {
 		Calendar cal = Calendar.getInstance();
 		TimeZone timeZone = cal.getTimeZone();
 		
@@ -130,22 +158,22 @@ public class DashBoardService {
 		
 		List<Map<String, Object>> rows_array = new ArrayList<Map<String,Object>>();
 		
-		List<Map<String, Object>> statistics = invoiceMapper.getResourceStatistic(params);
+		List<Object[]> dashStringData = dashBoardRepository.getResourceStatistic("00C7AF-773114-6DB700");
 		
-		for(Map<String, Object> s : statistics) {
+		for(Object[] statistics : dashStringData) {
 			List<Map<String, Object>> c_array = new ArrayList<Map<String,Object>>();
 			Map<String, Object> c = new HashMap<String, Object>();
 			
 			Map<String, Object> resource = new HashMap<String, Object>();
 			
-			resource.put("v", s.get("description"));
+			resource.put("v", statistics[0]);
 			resource.put("f", null);
 			
 			c_array.add(resource);
 			
 			Map<String, Object> total_cost = new HashMap<String, Object>();
 			
-			total_cost.put("v", s.get("total_cost"));
+			total_cost.put("v", statistics[1]);
 			total_cost.put("f", null);
 			
 			c_array.add(total_cost);
@@ -158,5 +186,5 @@ public class DashBoardService {
 		result.put("rows", rows_array);
 		
 		return JsonHelper.convertMapToJson(result);
-	}*/
+	}
 }

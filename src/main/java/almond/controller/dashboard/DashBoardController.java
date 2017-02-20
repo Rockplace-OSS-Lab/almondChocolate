@@ -1,16 +1,23 @@
 package almond.controller.dashboard;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import almond.domain.DashBoard;
 import almond.domain.Project;
+import almond.domain.SearchDashboard;
+import almond.domain.User;
 import almond.service.dashboard.DashBoardService;
 import almond.service.project.ProjectService;
 
@@ -25,24 +32,35 @@ public class DashBoardController {
 	ProjectService projectService;
 	
 	@GetMapping()
-	public String dashboard(Model model){
+	public String dashboard(Model model, SearchDashboard searchDashboard){
 		
-		String accountId = "00C7AF-773114-6DB700";
-		List<DashBoard> dashBoardList = dashBoardService.getDashboard(accountId);
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
-		List<Project> projectList = projectService.getProjects();
+		List<Project> projectList = projectService.getProjects(user.getUserSeq());
 		
-		model.addAttribute("projectList", projectList);
-		model.addAttribute("invoiceDetail", dashBoardList);
+		String projectId = searchDashboard.getProjectId();
+		searchDashboard.setProjectList(projectList);
+		
+		if(projectList != null && projectList.size() > 0){
+			model.addAttribute("projectList", projectList);
+		}
+		
+		if(projectId != null){
+			model.addAttribute("projectId", projectId);
+		}
+		
+		if(projectId != null || (projectList != null && projectList.size() > 0)){
+			Page<DashBoard> dashBoardList = dashBoardService.getDashboard(searchDashboard);
+			model.addAttribute("invoiceDetail", dashBoardList);
+		}
+		
 		
 		return "dashboard";
 	}
 	
-	@GetMapping("/chartData")
+	@PostMapping("/chartData")
 	@ResponseBody
-	public String getChartData(){
-		dashBoardService.getMonthlyCost();
-		System.out.println(dashBoardService.getMonthlyCost());
-		return dashBoardService.getMonthlyCost();
+	public String getChartData(@RequestParam Map<String, Object> params){
+		return dashBoardService.getChartData(params);
 	}
 }
