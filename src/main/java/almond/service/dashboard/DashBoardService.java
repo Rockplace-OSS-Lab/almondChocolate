@@ -36,12 +36,45 @@ public class DashBoardService {
 		PageRequest pageRequest = new PageRequest(startPage, 10);
 		Page<DashBoard> dashBoardList = null;
 		if(projectId != null){
-			dashBoardList = dashBoardRepository.findByProjectId(projectId, pageRequest);
+			
+			
+			if(searchDashboard.getSearchKeyword() != null){
+				if(searchDashboard.getSearchType()!=null && searchDashboard.getSearchType().equals("measurement1") ){
+					dashBoardList = dashBoardRepository.findByProjectIdAndMeasurement1LikeAndStartTimeGreaterThanEqualAndEndTimeLessThanEqual(
+							searchDashboard.getProjectId(), "%"+searchDashboard.getSearchKeyword()+"%", 
+							searchDashboard.getStartDate(), searchDashboard.getEndDate(), pageRequest);
+					
+					
+				}else if(searchDashboard.getSearchType()!=null && searchDashboard.getSearchType().equals("description")){
+					dashBoardList = dashBoardRepository.findByProjectIdAndDescriptionLikeAndStartTimeGreaterThanEqualAndEndTimeLessThanEqual(
+							searchDashboard.getProjectId(), searchDashboard.getSearchKeyword(), 
+							searchDashboard.getStartDate(), searchDashboard.getEndDate(),pageRequest);
+				}else{
+					dashBoardList = dashBoardRepository.findByProjectIdAndStartTimeGreaterThanEqualAndEndTimeLessThanEqual(
+							searchDashboard.getProjectId(), searchDashboard.getStartDate(), searchDashboard.getEndDate(),pageRequest);
+				}
+			}else{
+				dashBoardList = dashBoardRepository.findByProjectId(projectId,pageRequest);
+			}
+			
 		} else {
-			dashBoardList = dashBoardRepository.findByProjectIdIn(getProjectList(searchDashboard),pageRequest);
+			if(searchDashboard.getSearchKeyword() != null){
+				if(searchDashboard.getSearchType()!=null && searchDashboard.getSearchType().equals("measurement1") ){
+					dashBoardList = dashBoardRepository.findByProjectIdInAndMeasurement1LikeAndStartTimeGreaterThanEqualAndEndTimeLessThanEqual(
+							getProjectList(searchDashboard), searchDashboard.getSearchKeyword(), 
+							searchDashboard.getStartDate(), searchDashboard.getEndDate(),pageRequest);
+				}else if(searchDashboard.getSearchType()!=null && searchDashboard.getSearchType().equals("description")){
+					dashBoardList = dashBoardRepository.findByProjectIdInAndDescriptionLikeAndStartTimeGreaterThanEqualAndEndTimeLessThanEqual(
+							getProjectList(searchDashboard), searchDashboard.getSearchKeyword(), 
+							searchDashboard.getStartDate(), searchDashboard.getEndDate(),pageRequest);
+				}else{
+					dashBoardList = dashBoardRepository.findByProjectIdInAndStartTimeGreaterThanEqualAndEndTimeLessThanEqual(
+							getProjectList(searchDashboard), searchDashboard.getStartDate(), searchDashboard.getEndDate(),pageRequest);
+				}
+			}else{
+				dashBoardList = dashBoardRepository.findByProjectIdIn(getProjectList(searchDashboard),pageRequest);
+			}
 		}
-		
-		
 		
 		return dashBoardList;
 	}

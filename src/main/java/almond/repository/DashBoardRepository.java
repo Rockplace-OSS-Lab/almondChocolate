@@ -15,7 +15,26 @@ public interface DashBoardRepository extends JpaRepository<DashBoard, Long> {
 	
 	public Page<DashBoard> findByProjectIdIn(List<String> projectList, Pageable pageable);
 	
-	// public List<DashBoard> findByAccountIdAndByProjectId(String accountId, String projectId);
+	public Page<DashBoard> findByProjectIdAndMeasurement1Like(
+			String projectId, String measurement1, Pageable pageable);
+	
+	public Page<DashBoard> findByProjectIdAndMeasurement1LikeAndStartTimeGreaterThanEqualAndEndTimeLessThanEqual(
+			String projectId, String measurement1, String startDate, String endDate, Pageable pageable);
+	
+	public Page<DashBoard> findByProjectIdAndDescriptionLikeAndStartTimeGreaterThanEqualAndEndTimeLessThanEqual(
+			String projectId, String description, String startDate, String endDate, Pageable pageable);
+	
+	public Page<DashBoard> findByProjectIdAndStartTimeGreaterThanEqualAndEndTimeLessThanEqual(
+			String projectId, String startDate, String endDate, Pageable pageable);
+	
+	public Page<DashBoard> findByProjectIdInAndMeasurement1LikeAndStartTimeGreaterThanEqualAndEndTimeLessThanEqual(
+			List<String> projectList, String measurement1, String startDate, String endDate, Pageable pageable);
+	
+	public Page<DashBoard> findByProjectIdInAndDescriptionLikeAndStartTimeGreaterThanEqualAndEndTimeLessThanEqual(
+			List<String> projectList, String description, String startDate, String endDate, Pageable pageable);
+	
+	public Page<DashBoard> findByProjectIdInAndStartTimeGreaterThanEqualAndEndTimeLessThanEqual(
+			List<String> projectList, String startDate, String endDate, Pageable pageable);
 	
 	@Query(value = "SELECT date_format(m.start_time, '%Y-%m') AS month, m.cost AS Total_cost FROM dash_board m WHERE m.account_id = ?1 ", nativeQuery = true)
 	public List<Object[]> getDashStatistic(String accountId); 

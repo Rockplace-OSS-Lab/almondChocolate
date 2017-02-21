@@ -24,43 +24,50 @@ import almond.service.project.ProjectService;
 @Controller
 @RequestMapping("/dashboards")
 public class DashBoardController {
-	
+
 	@Autowired
 	DashBoardService dashBoardService;
 
 	@Autowired
 	ProjectService projectService;
+
+	@GetMapping("")
+	public String dashboard(Model model, SearchDashboard searchDashboard) {
+		return processDashBoard(model, searchDashboard);
+	}
+
+	@PostMapping("")
+	public String searchDashBoard(Model model, SearchDashboard searchDashboard) {
+		return processDashBoard(model, searchDashboard);
+	}
 	
-	@GetMapping()
-	public String dashboard(Model model, SearchDashboard searchDashboard){
-		
+	private String processDashBoard(Model model, SearchDashboard searchDashboard){
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
+
 		List<Project> projectList = projectService.getProjects(user.getUserSeq());
-		
+
 		String projectId = searchDashboard.getProjectId();
 		searchDashboard.setProjectList(projectList);
-		
-		if(projectList != null && projectList.size() > 0){
+
+		if (projectList != null && projectList.size() > 0) {
 			model.addAttribute("projectList", projectList);
 		}
-		
-		if(projectId != null){
+
+		if (projectId != null) {
 			model.addAttribute("projectId", projectId);
 		}
-		
-		if(projectId != null || (projectList != null && projectList.size() > 0)){
+
+		if (projectId != null || (projectList != null && projectList.size() > 0)) {
 			Page<DashBoard> dashBoardList = dashBoardService.getDashboard(searchDashboard);
 			model.addAttribute("invoiceDetail", dashBoardList);
 		}
 		
-		
 		return "dashboard";
 	}
-	
+
 	@PostMapping("/chartData")
 	@ResponseBody
-	public String getChartData(@RequestParam Map<String, Object> params){
+	public String getChartData(@RequestParam Map<String, Object> params) {
 		return dashBoardService.getChartData(params);
 	}
 }

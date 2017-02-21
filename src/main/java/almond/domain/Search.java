@@ -1,17 +1,17 @@
 package almond.domain;
 
 public abstract class Search {
-	private String type;
+	private String searchType;
 	private String searchKeyword;
 	private String startDate;
 	private String endDate;
 
-	public String getType() {
-		return type;
+	public String getSearchType() {
+		return searchType;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
 	}
 
 	public String getSearchKeyword() {
