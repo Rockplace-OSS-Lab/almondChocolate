@@ -32,49 +32,50 @@ public class DashBoardService {
 		int startPage = searchDashboard.getStartPage();
 		int currentPage = searchDashboard.getCurrentPage();
 		String projectId = searchDashboard.getProjectId();
+		String searchKeyword = "%"+searchDashboard.getSearchKeyword()+"%";
+		String startDate = searchDashboard.getStartDate();
+		String endDate = searchDashboard.getEndDate();
 		
-		PageRequest pageRequest = new PageRequest(startPage, 10);
+		PageRequest pageRequest = new PageRequest(currentPage, 10);
 		Page<DashBoard> dashBoardList = null;
-		if(projectId != null){
-			
-			
-			if(searchDashboard.getSearchKeyword() != null){
+		
+		if(projectId != null && !projectId.isEmpty()){
+			if(searchDashboard.getSearchKeyword() != null && !searchDashboard.getSearchKeyword().isEmpty()){
 				if(searchDashboard.getSearchType()!=null && searchDashboard.getSearchType().equals("measurement1") ){
 					dashBoardList = dashBoardRepository.findByProjectIdAndMeasurement1LikeAndStartTimeGreaterThanEqualAndEndTimeLessThanEqual(
-							searchDashboard.getProjectId(), "%"+searchDashboard.getSearchKeyword()+"%", 
-							searchDashboard.getStartDate(), searchDashboard.getEndDate(), pageRequest);
-					
-					
+							projectId, searchKeyword, 
+							startDate, endDate, pageRequest);
 				}else if(searchDashboard.getSearchType()!=null && searchDashboard.getSearchType().equals("description")){
 					dashBoardList = dashBoardRepository.findByProjectIdAndDescriptionLikeAndStartTimeGreaterThanEqualAndEndTimeLessThanEqual(
-							searchDashboard.getProjectId(), searchDashboard.getSearchKeyword(), 
-							searchDashboard.getStartDate(), searchDashboard.getEndDate(),pageRequest);
+							projectId, searchKeyword, 
+							startDate, endDate, pageRequest);
 				}else{
 					dashBoardList = dashBoardRepository.findByProjectIdAndStartTimeGreaterThanEqualAndEndTimeLessThanEqual(
-							searchDashboard.getProjectId(), searchDashboard.getStartDate(), searchDashboard.getEndDate(),pageRequest);
+							projectId, startDate, endDate, pageRequest);
 				}
 			}else{
-				dashBoardList = dashBoardRepository.findByProjectId(projectId,pageRequest);
+				dashBoardList = dashBoardRepository.findByProjectId(projectId, pageRequest);
 			}
 			
 		} else {
-			if(searchDashboard.getSearchKeyword() != null){
+			if(searchDashboard.getSearchKeyword() != null && !searchDashboard.getSearchKeyword().isEmpty()){
 				if(searchDashboard.getSearchType()!=null && searchDashboard.getSearchType().equals("measurement1") ){
 					dashBoardList = dashBoardRepository.findByProjectIdInAndMeasurement1LikeAndStartTimeGreaterThanEqualAndEndTimeLessThanEqual(
-							getProjectList(searchDashboard), searchDashboard.getSearchKeyword(), 
-							searchDashboard.getStartDate(), searchDashboard.getEndDate(),pageRequest);
+							getProjectList(searchDashboard), searchKeyword, 
+							startDate, endDate, pageRequest);
 				}else if(searchDashboard.getSearchType()!=null && searchDashboard.getSearchType().equals("description")){
 					dashBoardList = dashBoardRepository.findByProjectIdInAndDescriptionLikeAndStartTimeGreaterThanEqualAndEndTimeLessThanEqual(
-							getProjectList(searchDashboard), searchDashboard.getSearchKeyword(), 
-							searchDashboard.getStartDate(), searchDashboard.getEndDate(),pageRequest);
+							getProjectList(searchDashboard), searchKeyword, 
+							startDate, endDate, pageRequest);
 				}else{
 					dashBoardList = dashBoardRepository.findByProjectIdInAndStartTimeGreaterThanEqualAndEndTimeLessThanEqual(
-							getProjectList(searchDashboard), searchDashboard.getStartDate(), searchDashboard.getEndDate(),pageRequest);
+							getProjectList(searchDashboard), startDate, endDate, pageRequest);
 				}
 			}else{
-				dashBoardList = dashBoardRepository.findByProjectIdIn(getProjectList(searchDashboard),pageRequest);
+				dashBoardList = dashBoardRepository.findByProjectIdIn(getProjectList(searchDashboard), pageRequest);
 			}
 		}
+		searchDashboard.settingPage(dashBoardList);
 		
 		return dashBoardList;
 	}

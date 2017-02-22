@@ -62,6 +62,8 @@ public class DashBoardController {
 			model.addAttribute("invoiceDetail", dashBoardList);
 		}
 		
+		model.addAttribute("search", searchDashboard);
+		
 		return "dashboard";
 	}
 

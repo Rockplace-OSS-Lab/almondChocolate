@@ -17,3 +17,13 @@ $('#dashboardSearchBtn').click(function() {
 $(".searchDate").datepicker({
 	dateFormat : 'yy-mm-dd'
 });
+
+function goPage(currentPage) {
+
+	var fr = document.dashboardSearchForm;
+	fr.currentPage.value = currentPage;
+	fr.action="/dashboards";
+	fr.method="POST";
+	fr.submit();
+
+}
