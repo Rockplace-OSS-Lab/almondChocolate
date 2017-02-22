@@ -55,7 +55,7 @@ public class UserController {
 
 	@GetMapping("/registration")
 	public String registration() {
-		return "/registration";
+		return "registration";
 	}
 
 	@PostMapping("/registration")
@@ -80,6 +80,6 @@ public class UserController {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/";
+		return "registration_ok";
 	}
 }
