@@ -15,19 +15,19 @@ public class Project {
 	@Id
 	@GeneratedValue
 	private long projectSeq;
-	
+
 	@ManyToOne
 	@JoinColumn(foreignKey = @ForeignKey(name = "fk_project_user"))
 	private User user;
-	
+
 	private String projectId;
-	
+
 	private String adminEmail;
-	
+
 	private int status;
-	
+
 	private LocalDateTime regDate = LocalDateTime.now();
-	
+
 	private String okKey;
 
 	public void setProjectSeq(long projectSeq) {
@@ -57,5 +57,33 @@ public class Project {
 	public void setOkKey(String okKey) {
 		this.okKey = okKey;
 	}
-	
+
+	public long getProjectSeq() {
+		return projectSeq;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public String getProjectId() {
+		return projectId;
+	}
+
+	public String getAdminEmail() {
+		return adminEmail;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public LocalDateTime getRegDate() {
+		return regDate;
+	}
+
+	public String getOkKey() {
+		return okKey;
+	}
+
 }

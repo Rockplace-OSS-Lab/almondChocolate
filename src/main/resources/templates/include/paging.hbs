@@ -1,0 +1,46 @@
+        
+        <div class="row placeholders">
+            <ul class="pagination pagination-sm">
+                <!-- 첫 페이지 설정 -->
+            {{#if search.currentPage "<=" 1 }}
+                <li class="disabled"><span>&laquo;</span></li>
+            {{else}}
+                <li><a href="#" class="go_page" >&laquo;</a></li>
+            {{/if}}
+                
+                <!-- 이전 페이지 이동 -->
+            {{#if search.currentPage ">" 1 }}
+                <li><a href="#" class="go_page" >&lt;</a></li>                    
+            {{else}}
+                <li class="disabled"><span>&lt;</span></li>
+            {{/if}}
+
+                
+                <!-- 페이지 분할 -->
+                {{#each search.pages}}
+                    {{#ife page search.currentPage}}
+                            <li class="active"><a href="#" class="go_page" onclick="goPage({{page}})">{{page}}</a></li>
+                    {{else}}
+                            {{#ifle page search.totalPageCount }}
+                                <li><a href="#" class="go_page" onclick="goPage({{page}})" >{{page}}</a></li>
+                            {{/ifle}}
+                   {{/ife}}
+                {{/each}}
+                
+                <!-- 다음 페이지 이동 -->
+                {{#if search.currentPage "<" search.totalPageCount }}
+                    <li><a href="#" class="go_page" >&gt;</a></li>                    
+                {{else}}
+                    <li class="disabled"><span>&gt;</span></li>
+                {{/if}}
+                
+                <!-- 마지막 페이지 설정 -->
+                {{#if search.currentPage "==" search.totalPageCount }}
+                    <li class="disabled"><span>&raquo;</span></li>
+                {{else if search.totalPageCount "<" 1 }}
+                    <li class="disabled"><span>&raquo;</span></li>
+                {{ else }}
+                    <li><a href="#" class="go_page" >&raquo;</a></li>
+                {{/if}}
+            </ul>
+        </div>

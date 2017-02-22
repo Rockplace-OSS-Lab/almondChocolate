@@ -5,9 +5,9 @@
 		{{#if projectList}}
 			<!-- 프로젝트 별로 대시보드 탭 구분 -->
 			<ul class="nav nav-tabs">
-				<li role="presentation" class="active"><a href="#">통합</a></li>
+				<li role="presentation" class="active"><a href="/dashboards">통합</a></li>
 				{{#each projectList}}
-				<li role="presentation"><a href="/dashboard?projectId={{projectId}}">{{projectId}}</a></li>
+				<li role="presentation"><a href="/dashboards?projectId={{projectId}}">{{projectId}}</a></li>
 				{{/each}}
 			</ul>
 
@@ -28,15 +28,17 @@
 			</div>
 
 			<!-- 검색 폼 -->
-			<form class="form-inline" id="dashboardSearchForm">
+			<form class="form-inline" id="dashboardSearchForm" name="dashboardSearchForm">
+			
 				{{#if projectList}}
 				<input type="hidden" id="projectId" name="projectId" value="{{projectId}}">
+				<input type="hidden" id="currentPage" name="currentPage">
 				{{/if}}
 				<select class="form-control" id="searchType" name="searchType">
 					<option value="measurement1">Product</option>
 					<option value="description">Resource</option>
 				</select>
-				<input type="text" class="form-control" id="searchText" placeholder="검색어를 입력하세요." name="searchText">
+				<input type="text" class="form-control" id="searchKeyword" placeholder="검색어를 입력하세요." name="searchKeyword">
 				<div class="form-group">
 					<label for="startDate">From</label> <input type="text" class="searchDate form-control" id="startDate" name="startDate" placeholder="Start date">
 				</div>
@@ -84,6 +86,7 @@
 		  사용 가능한 프로젝트가 없습니다.
 		{{/if}}
 		</div>
+		{{> include/paging}}
 	</div>
 </div>
 {{/partial}}
