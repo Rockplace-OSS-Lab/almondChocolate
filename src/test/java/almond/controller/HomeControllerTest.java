@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import almond.core.test.AbstractIntegrationTest;
+import almond.support.test.AbstractIntegrationTest;
 
 public class HomeControllerTest extends AbstractIntegrationTest {
     @Test

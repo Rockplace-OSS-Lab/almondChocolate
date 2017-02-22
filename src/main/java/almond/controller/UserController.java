@@ -64,6 +64,7 @@ public class UserController {
 			// 이메일&키 일치 시 승인 처리(status=1)
 			userService.registrationOk(email, okKey);
 		} catch (Exception e) {
+		    // TODO Exception을 catch한 후 아무 처리도 하지 않을 것이라면 rethrow한다. 일단 Exception을 catch하면 그에 따른 처리가 필요함.
 			e.printStackTrace();
 		}
 		

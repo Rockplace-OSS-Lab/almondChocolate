@@ -39,6 +39,8 @@ public class DashBoardService {
 		PageRequest pageRequest = new PageRequest(currentPage, 10);
 		Page<DashBoard> dashBoardList = null;
 		
+		// TODO 데이터를 SearchDashboard에서 꺼내는 것이 아니라 SearchDashboard에 메시지를 보내 처리하도록 리팩토링한다.
+		// TODO indent가 너무 깊다. indent의 깊이를 줄여본다.
 		if(projectId != null && !projectId.isEmpty()){
 			if(searchDashboard.getSearchKeyword() != null && !searchDashboard.getSearchKeyword().isEmpty()){
 				if(searchDashboard.getSearchType()!=null && searchDashboard.getSearchType().equals("measurement1") ){
@@ -94,6 +96,7 @@ public class DashBoardService {
 		
 		params.put("tz", timeZone.getID());
 		
+		// TODO java의 enum을 사용하도록 리팩토링한다.
 		if(params.get("type").equals("bar")) {
 			return getMonthlyCost();
 		} else if(params.get("type").equals("donut")) {
@@ -110,6 +113,7 @@ public class DashBoardService {
 		
 		List<Map<String, Object>> cols_array = new ArrayList<Map<String,Object>>();
 		
+		// TODO Map을 쓰지 않고 자바 클래스를 생성해 리팩토링한다.
 		Map<String, Object> cols = new HashMap<String, Object>();
 		cols.put("id", "");
 		cols.put("label", "Month");
@@ -136,6 +140,7 @@ public class DashBoardService {
 			
 			Map<String, Object> month = new HashMap<String, Object>();
 			
+			// TODO Map을 쓰지 않고 자바 클래스를 생성해 리팩토링한다.
 			month.put("v", statistic[0]);
 			month.put("f", null);
 			
@@ -195,6 +200,7 @@ public class DashBoardService {
 		List<Object[]> dashStringData = dashBoardRepository.getResourceStatistic("00C7AF-773114-6DB700");
 		
 		for(Object[] statistics : dashStringData) {
+		    // TODO 변수명에 under bar를 사용하지 않는다.
 			List<Map<String, Object>> c_array = new ArrayList<Map<String,Object>>();
 			Map<String, Object> c = new HashMap<String, Object>();
 			

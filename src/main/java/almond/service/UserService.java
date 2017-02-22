@@ -17,6 +17,7 @@ public class UserService {
 	
 	@Transactional
 	public void registrationProcess(User user) {
+	    // TODO 로직을 User Domain이 처리하도록 구현한다.
 		user.setOkKey(user.createKey());
 		User savedUser = userRepository.save(user);
 		mailService.sendRegistrationMail(savedUser);
@@ -26,6 +27,7 @@ public class UserService {
 	public void registrationOk(String email, String okKey) throws Exception {
 		User user = userRepository.findByEmail(email);
 
+		// TODO 로직을 User Domain이 처리하도록 구현한다. 아래 4라인을 User로 구현하고 테스트한다.
 		if (!user.getOkKey().equals(okKey)) {
 			throw new Exception("okKey 불일치!");
 		}

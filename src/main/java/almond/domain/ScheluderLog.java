@@ -19,6 +19,7 @@ public class ScheluderLog {
 	
 	private String message;
 	
+	// TODO EnumType을 oridinal과 string, 장,단점을 명확히 이해한 후 사용한다.
 	@Enumerated(EnumType.ORDINAL)
 	private ResultCode resultCode;
 	

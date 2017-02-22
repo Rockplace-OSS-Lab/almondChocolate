@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 public final class JsonHelper {
-
+    // Spring MVC는 jackson json 라이브러리를 사용한다. 반드시 Gson 라이브러리를 사용할 필요가 없다면 jackson을 사용한다.
 	public static String convertMapToJson(Map<String, Object> map) {
 		Gson gsonObj = new Gson();
 		

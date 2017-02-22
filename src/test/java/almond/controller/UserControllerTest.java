@@ -8,10 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import almond.core.test.AbstractIntegrationTest;
+import almond.support.test.AbstractIntegrationTest;
+import almond.support.test.HtmlFormDataBuilder;
 
 public class UserControllerTest extends AbstractIntegrationTest {
 	private static final Logger log = LoggerFactory.getLogger(UserControllerTest.class);
@@ -24,10 +24,10 @@ public class UserControllerTest extends AbstractIntegrationTest {
 
     @Test
 	public void registration() throws Exception {
-    	MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-    	params.add("email", "javajigi@rockplace.co.kr");
-    	params.add("password", "password");
-    	HttpEntity<MultiValueMap<String, String>> request = requestForm(params);
+        HttpEntity<MultiValueMap<String, Object>> request = HtmlFormDataBuilder.urlEncodedForm()
+            .addParameter("email", "javajigi@rockplace.co.kr")
+            .addParameter("password", "password")
+            .build();
     	ResponseEntity<String> response = template.postForEntity( "/registration", request , String.class );
     	assertEquals(HttpStatus.FOUND, response.getStatusCode());
     }
