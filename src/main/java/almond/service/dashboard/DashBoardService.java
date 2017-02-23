@@ -29,12 +29,11 @@ public class DashBoardService {
 	}*/
 	
 	public Page<DashBoard> getDashboard(SearchDashboard searchDashboard){
-		int startPage = searchDashboard.getStartPage();
-		int currentPage = searchDashboard.getCurrentPage();
+		int currentPage = searchDashboard.getCurrentPage()-1;
 		String projectId = searchDashboard.getProjectId();
 		String searchKeyword = "%"+searchDashboard.getSearchKeyword()+"%";
-		String startDate = searchDashboard.getStartDate();
-		String endDate = searchDashboard.getEndDate();
+		String startDate = searchDashboard.getStartDate() == null ? "" : searchDashboard.getStartDate().toString();
+		String endDate = searchDashboard.getEndDate() == null ? "" : searchDashboard.getEndDate().toString();
 		
 		PageRequest pageRequest = new PageRequest(currentPage, 10);
 		Page<DashBoard> dashBoardList = null;

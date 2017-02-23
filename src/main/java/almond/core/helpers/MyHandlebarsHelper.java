@@ -36,6 +36,14 @@ public class MyHandlebarsHelper {
 			return options.inverse(this);
 		}
 	}
+	
+	public CharSequence ifgt(final int arg1, final int arg2, final Options options) throws IOException {
+		if(arg1 > arg2){
+			return options.fn(this);
+		}else{
+			return options.inverse(this);
+		}
+	}
 
 	public CharSequence ifle(final int arg1, final int arg2, final Options options) throws IOException {
 		if(arg1 <= arg2){
@@ -44,6 +52,15 @@ public class MyHandlebarsHelper {
 			return options.inverse(this);
 		}
 	}
+	
+	public CharSequence iflt(final int arg1, final int arg2, final Options options) throws IOException {
+		if(arg1 < arg2){
+			return options.fn(this);
+		}else{
+			return options.inverse(this);
+		}
+	}
+	
 	public CharSequence ife(final int arg1, final int arg2, final Options options) throws IOException {
 		if(arg1 == arg2){
 			return options.fn(this);

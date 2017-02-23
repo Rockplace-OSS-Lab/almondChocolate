@@ -16,9 +16,9 @@ public class DashBoard {
 
 	private String lineItem;
 
-	private String startTime;
+	private LocalDateTime startTime;
 
-	private String endTime;
+	private LocalDateTime endTime;
 
 	private String project;
 
@@ -76,19 +76,19 @@ public class DashBoard {
 		this.lineItem = lineItem;
 	}
 
-	public String getStartTime() {
+	public LocalDateTime getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(String startTime) {
+	public void setStartTime(LocalDateTime startTime) {
 		this.startTime = startTime;
 	}
 
-	public String getEndTime() {
+	public LocalDateTime getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(String endTime) {
+	public void setEndTime(LocalDateTime endTime) {
 		this.endTime = endTime;
 	}
 

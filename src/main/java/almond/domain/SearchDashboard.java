@@ -13,7 +13,7 @@ public class SearchDashboard extends Search {
 	private int currentPage = 1;
 	private int totalPageCount = 1;
 
-	private List<PageNumber> pages = new ArrayList();
+	private List<PageNumber> pages = new ArrayList<PageNumber>();
 
 	public String getProjectId() {
 		return projectId;
@@ -57,8 +57,8 @@ public class SearchDashboard extends Search {
 
 	public void settingPage(Page<DashBoard> dashBoardList) {
 
-		this.startPage = (dashBoardList.getNumber() / 10)*10 + 1;
-		this.totalPageCount = dashBoardList.getTotalPages()-1;
+		this.startPage = (dashBoardList.getNumber() / 10) * 10 + 1;
+		this.totalPageCount = dashBoardList.getTotalPages();
 		for (int i = startPage; i < startPage + 10; i++) {
 			PageNumber num = new PageNumber();
 			num.setPage(i);
