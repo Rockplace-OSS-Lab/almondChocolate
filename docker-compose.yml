@@ -1,0 +1,12 @@
+version: '2.1'
+services:
+  nginx:
+    depends_on:
+      - almondchocolate
+    image: rockplace/nginx
+    links:
+      - almondchocolate:almondchocolate
+    ports:
+      - "80:80"
+  almondchocolate:
+    image: almond_chocolate:latest

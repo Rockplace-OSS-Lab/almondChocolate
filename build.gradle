@@ -7,12 +7,14 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath('se.transmode.gradle:gradle-docker:1.2')
 	}
 }
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'docker'
 
 jar {
 	baseName = 'almond_chocolate'
@@ -42,4 +44,15 @@ dependencies {
 	compile('com.sun.mail:javax.mail:1.5.6')
 	compile('org.springframework:spring-context-support:4.3.3.RELEASE')
 	compile('com.sun.mail:javax.mail:1.5.6')
+}
+
+task buildDocker(type: Docker, dependsOn: build) {
+  applicationName = jar.baseName
+  dockerfile = file('src/main/docker/Dockerfile')
+  doFirst {
+    copy {
+      from jar
+      into stageDir
+    }
+  }
 }
