@@ -3,7 +3,7 @@ services:
   nginx:
     depends_on:
       - almondchocolate
-    image: rockplace/nginx
+    build: ./nginx
     links:
       - almondchocolate:almondchocolate
     ports:
