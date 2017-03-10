@@ -9,4 +9,20 @@ services:
     ports:
       - "80:80"
   almondchocolate:
+    depends_on:
+      - db
     image: almond_chocolate:latest
+    links:
+      - db:db
+  db:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=rplinux
+      - MYSQL_DATABASE=new_almond
+      - MYSQL_USER=almond
+      - MYSQL_PASSWORD=rplinux
+      - MYSQL_CHARSET=utf8
+    volumes:
+      - mysql-data:/var/lib/mysql    
+volumes:
+  mysql-data:
