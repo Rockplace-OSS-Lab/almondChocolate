@@ -36,7 +36,7 @@ dependencies {
     compile('com.github.jknack:handlebars-humanize:4.0.6')
     compile('com.github.jknack:handlebars-markdown:4.0.6')
     compile('org.springframework.boot:spring-boot-starter-security')
-	runtime('mysql:mysql-connector-java')
+	runtime('com.h2database:h2:1.4.193')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	compile('com.google.code.gson:gson:2.8.0')
 	compile('com.sun.mail:javax.mail:1.5.6')
