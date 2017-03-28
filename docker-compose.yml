@@ -1,4 +1,4 @@
-version: '2.1'
+version: '3'
 services:
   nginx:
     depends_on:
@@ -16,6 +16,7 @@ services:
       - db:db
   db:
     image: mysql:latest
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci --init-connect='SET NAMES UTF8;' --init_connect='SET collation_connection = utf8_general_ci' --innodb-flush-log-at-trx-commit=0
     environment:
       - MYSQL_ROOT_PASSWORD=rplinux
       - MYSQL_DATABASE=new_almond
