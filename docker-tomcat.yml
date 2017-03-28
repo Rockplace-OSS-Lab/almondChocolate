@@ -1,0 +1,8 @@
+version: '3'
+services:
+  almondchocolate:
+    image: almond_chocolate:latest
+    extra_hosts:
+      - db:192.168.99.102
+    ports:
+      - "8080:8080"
